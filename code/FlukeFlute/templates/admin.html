@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block left_nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('admin_page') }}">Dashboard</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('manage_creators') }}">Manage Creators</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('manage_tracks') }}">Manage Tracks</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('add_new_genre') }}">Add Genre</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('add_new_language') }}">Add Language</a>
+</li>
+{% endblock %}
+
+{% block right_nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('logout_page') }}">Logout</a>
+</li>
+{% endblock %}
+
+{%block content%}
+<div class="jumbotron">
+    <div class="row mt-5  ">
+        <div class="col-md-6">
+            <h2>Total Users: {{ users }}</h2> <br>
+            <h2>Total Creators: {{ creators }}</h2>
+        </div>
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/{}'.format('ucs_chart.png')) }}" class="img-fluid"
+                alt="Users/Creators Chart">
+        </div>
+    </div>
+    <div class="row mt-5 ">
+        <div class="col-md-6">
+            <h2>Genres Distribution</h2>
+        </div>
+        <div class="col-md-6">
+    
+            <img src="{{ url_for('static', filename='images/{}'.format('genres_chart.png')) }}" class="img-fluid"
+                alt="Genres Chart">
+    
+        </div>
+    </div>
+    <div class="row mt-5 ">
+        <div class="col-md-6">
+            <h2>Languages Distribution</h2>
+        </div>
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/{}'.format('languages_chart.png')) }}" class="img-fluid"
+                alt="Languages Chart">
+        </div>
+    </div>
+    <div class="row mt-5 ">
+        <div class="col-md-6">
+            <h2>Albums Created: {{ albums }}</h2><br>
+            <h2>Tracks Uploaded: {{ tracks }}</h2><br>
+            <h2>Playlists Created: {{ playlists }}</h2><br>
+        </div>
+        <div class="col-md-6">
+                <img src="{{ url_for('static', filename='images/{}'.format('taps_chart.png')) }}" class="img-fluid" alt="Stats Chart">
+        </div>
+    </div>
+    <div class="row mt-5 ">
+        <div class="col-md-6">
+            <h2>Tracks Performance</h2>
+        </div>
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/{}'.format('ratings_chart.png')) }}" class="img-fluid"
+                alt="Ratings Chart">  
+        </div>
+    </div>
+</div>
+
+{%endblock%}
+

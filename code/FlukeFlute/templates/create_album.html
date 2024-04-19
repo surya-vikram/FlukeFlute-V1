@@ -1,0 +1,49 @@
+{% extends 'creator.html' %}
+{% block left_nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home_page') }}">Home</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('creator_page') }}">Creator</a>
+</li>
+
+{% endblock %}
+
+{% block right_nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('profile_page') }}">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('logout_page') }}">Logout</a>
+</li>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form method="post" class="container mt-4" style="color:white" enctype="multipart/form-data" novalidate autocomplete="off">
+
+        {{ form.hidden_tag() }}
+        <h1 class="h3 mb-3 font-weight-normal">
+            {{heading}}
+        </h1>
+        <br>
+        {{ form.title.label() }}
+        {{ form.title(class="form-control", placeholder="Enter the title") }}<br>
+
+        {{ form.tracks.label() }}
+        {{ form.tracks(class="form-control custom-select", multiple="multiple") }} <br><br>
+        {% if form.cover %}
+        {{ form.cover.label() }}
+        {{ form.cover(class="form-control-file", placeholder="Choose the album cover") }}<br>
+        {%endif%}
+        {{ form.description.label() }}
+        {{ form.description(class="form-control", placeholder="Enter description") }}<br>
+
+        {{ form.submit(class="btn btn-lg btn-block btn-primary") }} 
+
+    </form>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block left_nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home_page') }}">Home</a>
+</li>
+
+{% endblock %}
+
+{% block right_nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('logout_page') }}">Logout</a>
+</li>
+{% endblock %}
+
+{% block content %}
+
+<div class="container text-light mt-5">
+    {% if current_user.pfp_path %}
+    <div class="rounded-circle overflow-hidden pfp mb-4">
+        <img class="w-100 h-100 object-fit-cover" src="{{ url_for('static', filename='images/{}'.format(current_user.pfp_path)) }}" alt="{{ current_user.user_name }}">
+    </div>
+    {%endif%}
+    <p>Name: {{ current_user.name }}</p>
+    <p>Username: {{ current_user.username }}</p>
+    <p>Email: {{ current_user.email }}</p>
+    {% if current_user.stage_name %}
+    <p>Stage Name: {{ current_user.stage_name }}</p>
+    {% endif %}
+    {% if current_user.bio %}
+    <p>Bio: {{ current_user.bio }}</p>
+    {% endif %}
+    {% if current_user.tracks %}
+    <p>Number of Tracks: {{ current_user.tracks|length }}</p>
+    {% endif %}
+    {% if current_user.albums %}
+    <p>Number of Albums: {{ current_user.albums|length }}</p>
+    {% endif %}
+    {% if current_user.playlists %}
+    <p>Number of Playlists: {{ current_user.playlists|length }}</p>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'home.html' %}
+
+{% block left_nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home_page') }}">Home</a>
+</li>
+{% endblock %}
+
+{%block content%}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>{{ track.title|title }}</h2><br>
+            <p>Artist: {{ User.query.filter_by(id=track.creator_id).first().stage_name|title }}</p>
+            <p>Genre: {{ Genre.query.filter_by(id=track.genre_id).first().name }}</p>
+            <p>Language: {{ Language.query.filter_by(id=track.language_id).first().name }}</p>
+            <p>Date Released: {{ track.release_date }}</p>
+        </div>
+        <div class="col-md-4 text-md-right mt-5">
+            <p class="mt-4">
+                Rating:
+                {% set rating = track.avg_rating() %}
+                {% if rating == 0.0 %}
+                {{ None }}
+                {% else %}
+                {{ rating }}
+                {% endif %}
+            </p>
+            <div class="btn-group mt-2">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    Rate
+                </button>
+                <div class="dropdown-menu">
+                    {% for rating in range(1, 6) %}
+                    <a class="dropdown-item" href="{{ url_for('rate_song', id=track.id, value=rating) }}">{{ rating }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="mt-4 mb-5">Lyrics</h3>
+    
+    <pre class="mb-5 text-light" style="height: 150px;">
+        {% if track.lyrics %}
+        {{ track.lyrics }}
+        {%else%} <p class="lead">Artist didn't upload lyrics for this track.</p>
+        {%endif%}
+    </pre>
+
+    <audio controls class="w-100 mb-3">
+        <source src="{{ url_for('static', filename='audios/{}'.format(track.audio_path)) }}" type="audio/mp3">
+    </audio>
+</div>
+
+{%endblock%}

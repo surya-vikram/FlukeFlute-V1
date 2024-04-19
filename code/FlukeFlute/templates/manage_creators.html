@@ -1,0 +1,31 @@
+{% extends 'admin.html' %}
+
+{% block content %}
+<div class="container-fluid text-light">
+    <h2 class="mb-5 mt-5 ">Creators List</h2>
+    <table class="table text-light">
+        <thead>
+            <tr>
+                <th scope="col">Stage Name</th>
+                <th scope="col">Popularity</th>
+                <th scope="col">Flag/UnFlag</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for creator in creators %}
+            <tr>
+                <th scope="row">{{creator.stage_name|title}}</th>
+                <td>
+                    {{creator.popularity()}}
+                </td>
+                {% if creator.is_flagged %}
+                <td><a href="{{ url_for('flag_creator', id=creator.id ) }}" class="btn btn-success w-25">UnFlag</a></td>
+                {% else %}
+                <td><a href="{{ url_for('flag_creator', id=creator.id ) }}" class="btn btn-danger w-25">Flag </a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

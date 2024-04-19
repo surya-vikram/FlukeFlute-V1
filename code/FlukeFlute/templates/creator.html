@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block left_nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home_page') }}">Home</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="#album">Created Albums</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="#track">Uploaded Tracks</a>
+</li>
+{% endblock %}
+
+{% block right_nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('upload_song_page') }}">Upload Song</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('create_album_page') }}">Create Album</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('profile_page') }}">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('logout_page') }}">Logout</a>
+</li>
+{% endblock %}
+
+
+{% block content %}
+
+<section class="py-5 px-0" id="album">
+    <div class="container">
+        <h2 class="mb-5">Your Albums</h2>
+        {% if albums %}
+        <div class="row row-cols-lg-2">
+        {% for album in albums %}
+        <div class="col-lg-3 col-md-4 col-6 mb-4 mt-1">
+            <div class="card">
+                <a href="{{ url_for('album_page', id=album.id) }}" style="text-decoration: none;">
+                    <img src="{{ url_for('static', filename='images/{}'.format(album.cover_path)) }}" class="card-img-top custom-img">
+                    <div class="card-body custom-card-body d-flex align-items-center justify-content-start mb-0 pb-0 pt-2">
+                        <h5 class="card-title">{{ album.title }}</h5>
+                    </div>
+                </a>
+                <div class="card-footer bg-white border-top-0 mt-0 pt-0">
+                    <a href="{{ url_for('edit_album', id=album.id) }}" class="btn btn-success mr-2 mt-0">Edit</a>
+                    <a href="{{ url_for('delete_album', id=album.id) }}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+        {% else %}
+        <p>No albums available.</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="py-5 px-0" id="track">
+    <h2 class="mb-5 mt-5 ml-4">Your Tracks</h2>
+    {% if tracks %}
+    <table class="table text-light">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Rating</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for track in tracks %}
+            <tr>
+                <th scope="row"><a href="{{url_for('play_page', id=track.id)}}"
+                        style="text-decoration: none; color: white;">{{track.title|title}}</a></th>
+                <td>{% set rating = track.avg_rating() %}
+                    {% if rating == 0.0 %}
+                    {{ None }}
+                    {%else%}
+                    {{rating}}
+                    {%endif%}
+                </td>
+                <td><a href="{{ url_for('edit_track', id=track.id) }}" class="btn btn-success">Edit</a></td>
+                <td><a href="{{ url_for('delete_track', id=track.id) }}" class="btn btn-danger">Delete</a></td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="ml-4">No tracks available.</p>
+    {% endif %}
+</section>
+{% endblock %}

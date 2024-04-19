@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block left_nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home_page') }}">Home</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('create_playlist_page') }}">Create Playlist</a>
+</li>
+{% endblock %}
+
+{% block right_nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('logout_page') }}">Logout</a>
+</li>
+{% endblock %}
+
+
+{% block content %}
+
+<h2 class="mb-5 mt-5"> Your Playlists</h2>
+<table class="table text-light">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for playlist in playlists %}
+    <tr>
+        <th scope="row"><a href="{{ url_for('playlist_tracks', id=playlist.id) }}" style="text-decoration: none; color: white;">{{ playlist.name|title }}</a></th>
+        <td><a href="{{ url_for('edit_playlist', id=playlist.id) }}" class="btn btn-success">Edit</a></td>
+        <td><a href="{{ url_for('delete_playlist', id=playlist.id) }}" class="btn btn-danger">Delete</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+

@@ -1,0 +1,20 @@
+{% extends 'admin.html'%}
+
+{% block content %}
+
+<div class="container mt-5">
+    <form method="post" class="container mt-5 text-light" novalidate autocomplete="off">
+        {{ form.hidden_tag() }}
+        <h1 class="h3 mb-4 font-weight-normal">
+             Add Language 
+        </h1>
+        <br>
+
+        {{ form.name.label() }}
+        {{ form.name(class="form-control w-75 mt-3 mb-5", placeholder="Enter the language name") }}
+
+        {{ form.submit(class="btn btn-lg btn-block btn-primary w-25") }} 
+    </form>
+</div>
+
+{% endblock %}

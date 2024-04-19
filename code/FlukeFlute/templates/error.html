@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% set admin_role = Role.query.filter_by(name='Admin').first() %}
+
+{% block left_nav %} 
+    {% if current_user.is_authenticated and admin_role not in current_user.roles %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('home_page') }}">Home</a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block right_nav %} 
+    {% if not current_user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('login_page') }}">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('register_page') }}">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_login_page') }}">Admin</a>
+        </li>
+    {% else %}
+        {% if admin_role in current_user.roles %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_page') }}">Admin</a>
+        </li>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container text-center mt-5">
+        <h2>{{ error_code }}</h2>
+        <p class="lead">{{ error_message }}</p>
+    </div>
+{% endblock %}

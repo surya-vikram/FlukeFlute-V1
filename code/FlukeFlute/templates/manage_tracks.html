@@ -1,0 +1,32 @@
+{% extends 'admin.html' %}
+
+{%block content%}
+<h2 class="mb-5 mt-5">Tracks List</h2>
+<table class="table text-light">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Artist</th>
+            <th scope="col">Rating</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for track in tracks %}
+        <tr>
+            <th scope="row">{{track.title|title}}</th>
+            <td>{{ User.query.filter_by(id=track.creator_id).first().stage_name|title }}</td>
+            <td>{% set rating = track.avg_rating() %}
+                {% if rating == 0.0 %}
+                {{ None }}
+                {%else%}
+                {{rating}}
+                {%endif%}
+            </td>
+            <td><a href="{{ url_for('remove_track', id=track.id ) }}" class="btn btn-danger">Remove</a></td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+
+{%endblock%}

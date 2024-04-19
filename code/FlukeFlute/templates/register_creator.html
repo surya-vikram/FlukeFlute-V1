@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block left_nav %}
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('home_page') }}">Home</a>
+</li>
+{% endblock %}
+
+{% block right_nav %} 
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('logout_page') }}">Logout</a>
+</li>
+{% endblock %}
+
+{% block content %}
+        <div class="container">
+            <form method="post" class="form-register" style="color:white" enctype="multipart/form-data"  novalidate autocomplete="off">
+
+                {{ form.hidden_tag() }}
+                <h1 class="h3 mb-3 font-weight-normal">
+                    Register as Creator
+                </h1>
+                <br>
+        
+                {{ form.stage_name.label() }}
+                {{ form.stage_name(class="form-control", placeholder="Enter your stage name") }} <br>
+                
+                {{ form.bio.label() }}
+                {{ form.bio(class="form-control", placeholder="Enter your bio") }} <br>
+                
+                {{form.pfp.label()}} <br>
+                {{form.pfp(class="form-control-file text-bg-dark mb-3" ,type="file")}}
+
+                <br>
+                {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+                <br>
+
+                <div class="checkbox mb-3 text-center">
+                    <h6>Register Later?</h6>
+                    <a class="btn btn-sm btn-secondary" href="{{ url_for('home_page') }}">Go Back</a>
+                </div>
+
+            </form>
+        </div>
+{% endblock %}
+
